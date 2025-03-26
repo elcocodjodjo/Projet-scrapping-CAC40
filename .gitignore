@@ -1,0 +1,12 @@
+# Fichiers Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Données générées
+data.csv
+daily_report.txt
+
+# Logs
+*.log
+*.tmp
