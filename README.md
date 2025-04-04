@@ -76,12 +76,17 @@ Deux tâches cron sont planifiées :
 
 💼 Répartition du travail:
 CYPRIEN DUCEUX: Choix et test du site internet 
+
 Extraction des donnés dash
+
 Création du fichier CSV
+
 ALgorithme Python pour le Dash Bord
 
 CHARLIE DELPLACE: Automatisation avec cron 
+
 Implémentation de la machine virtuelle
+
 ALgorithme Python pour le Dash Bord
 
 
