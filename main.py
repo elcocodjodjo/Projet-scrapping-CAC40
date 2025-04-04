@@ -57,7 +57,7 @@ app.layout = html.Div([
         ] + [
             html.Tr([html.Td(df_table.iloc[i][col]) for col in df_table.columns]) for i in range(len(df))
         ], style={'margin': '20px auto', 'borderCollapse': 'collapse', 'width': '80%'})
-    ])
+    ]),
     html.Div([
         html.H4("📈 Rapport quotidien (20h)", style={'textAlign': 'center'}),
         html.Pre(rapport_texte, style={
