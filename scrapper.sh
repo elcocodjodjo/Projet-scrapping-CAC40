@@ -11,18 +11,12 @@ if [ ! -f "$output_file" ]; then
     echo "Date,Price" > "$output_file"
 fi
 
-# Boucle infinie pour récupérer le prix toutes les 30 secondes
-while true; do
-    # Récupérer le prix avec curl et grep
-    price=$(curl -s "$url" | grep -oP '(?<=<span class="price">)[^<]+')
+# Récupérer le prix avec curl et grep
+price=$(curl -s "$url" | grep -oP '(?<=<span class="price">)[^<]+')
 
-    # Récupérer la date/heure actuelle
-    timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+# Récupérer la date/heure actuelle
+timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
-    # Ajouter la ligne dans le fichier CSV
-    echo "$timestamp,$price" >> "$output_file"
-
-    # Attendre 30 secondes avant de récupérer le prix à nouveau
-    sleep 30
-done
+# Ajouter la ligne dans le fichier CSV
+echo "$timestamp,$price" >> "$output_file"
 
