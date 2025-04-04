@@ -42,7 +42,7 @@ bash
 Copier
 Modifier
 curl -s "https://forex.tradingsat.com/cours-euro-dollar-FX0000EURUSD/" | grep ...
-La donnée est ensuite formatée et ajoutée avec timestamp dans un fichier data.csv.
+La donnée est ensuite formatée et ajoutée avec timestamp dans un fichier prix_eur_usd.csv.
 
 2. 📈 Visualisation avec Dash (Python)
 Nous avons construit une interface avec le framework Dash qui permet :
@@ -73,6 +73,17 @@ Deux tâches cron sont planifiées :
 ///prix_eur_usd.csv
 ///scrapper.py
 ///scrapper.sh
+
+💼 Répartition du travail:
+CYPRIEN DUCEUX: Choix et test du site internet 
+Extraction des donnés dash
+Création du fichier CSV
+ALgorithme Python pour le Dash Bord
+
+CHARLIE DELPLACE: Automatisation avec cron 
+Implémentation de la machine virtuelle
+ALgorithme Python pour le Dash Bord
+
 
 ✨ Conclusion
 Ce projet nous a permis de maîtriser un workflow complet alliant Bash, Python, gestion de cron, visualisation avec Dash, et traitement de données. 
