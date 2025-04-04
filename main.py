@@ -33,6 +33,8 @@ app = dash.Dash(__name__)
 # Créer un graphique à partir des données du CSV
 fig = px.line(df, x='Date', y='Price', title='Prix EUR/USD au fil du temps')
 
+df_table = df.sort_values("Date", ascending =False)
+
 # Mettre en place la mise en page du tableau de bord
 app.layout = html.Div([
     html.H1("Tableau de bord des prix EUR/USD", style={'textAlign': 'center'}),
@@ -43,9 +45,9 @@ app.layout = html.Div([
     html.Div([
         html.H4("Données CSV", style={'textAlign': 'center'}),
         html.Table([
-            html.Tr([html.Th(col) for col in df.columns])  # En-têtes du tableau
+            html.Tr([html.Th(col) for col in df_table.columns])  # En-têtes du tableau
         ] + [
-            html.Tr([html.Td(df.iloc[i][col]) for col in df.columns]) for i in range(len(df))
+            html.Tr([html.Td(df_table.iloc[i][col]) for col in df_table.columns]) for i in range(len(df))
         ], style={'margin': '20px auto', 'borderCollapse': 'collapse', 'width': '80%'})
     ])
 ])
