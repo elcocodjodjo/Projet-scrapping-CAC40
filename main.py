@@ -5,6 +5,7 @@ Created on Thu Mar 27 16:51:56 2025
 @author: cypri
 """
 import dash
+from dash.dependencies import Output, Input
 from dash import dcc, html
 import pandas as pd
 import plotly.express as px
@@ -46,6 +47,11 @@ df_table = df.sort_values("Date", ascending =False)
 # Mettre en place la mise en page du tableau de bord
 app.layout = html.Div([
     html.H1("Tableau de bord des prix EUR/USD", style={'textAlign': 'center'}),
+    dcc.Interval(
+        id='interval-component',
+        interval=5*60*1000,  # 5 minutes
+        n_intervals=0
+    ), 
     dcc.Graph(
         id='prix-eur-usd-graph',
         figure=fig
@@ -74,3 +80,16 @@ app.layout = html.Div([
 # Lancer le serveur avec `app.run()` au lieu de `app.run_server()`
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port = 8050, debug=True)
+
+
+@app.callback(
+    Output('prix-eur-usd-graph', 'figure'),
+    Input('interval-component', 'n_intervals')
+)
+def update_graph(n):
+    df = pd.read_csv('prix_eur_usd.csv', header=None)
+    df.columns = ['Date', 'Price']
+    df['Date'] = pd.to_datetime(df['Date'])
+    df = df.sort_values('Date')
+    fig = px.line(df, x='Date', y='Price', title='Prix EUR/USD au fil du temps')
+    return fig
