@@ -17,6 +17,9 @@ app = dash.Dash(__name__)
 
 app.layout = html.Div([
     html.H1("Tableau de bord des prix EUR/USD", style={'textAlign': 'center'}),
+   
+    html.H2(id='latest-rate', style={'textAlign': 'center', 'color': 'gray'}),
+
 
     # Rafraîchissement automatique toutes les 5 min
     dcc.Interval(
@@ -38,19 +41,15 @@ app.layout = html.Div([
             'margin': 'auto'
         })
     ]),
-
-    html.Div([
-        html.H4("📋 Données CSV (plus récentes en haut)", style={'textAlign': 'center'}),
-        html.Div(id='csv-table')
-    ])
 ])
-
 
 @app.callback(
     [Output('prix-eur-usd-graph', 'figure'),
-     Output('csv-table', 'children')],
-    [Input('interval-component', 'n_intervals')]
+     Output('latest-rate', 'children')],
+    Input('interval-component', 'n_intervals')
 )
+
+
 def update_content(n):
     print(f"[Callback] Rafraîchissement {n}")
     gc.collect()
@@ -66,15 +65,11 @@ def update_content(n):
     # Graphique
     fig = px.line(df.sort_values('Date'), x='Date', y='Price', title='Prix EUR/USD au fil du temps')
 
-    # Tableau (données récentes en haut)
-    df_table = df.sort_values('Date', ascending=False)
-    table = html.Table([
-        html.Tr([html.Th(col) for col in df_table.columns])
-    ] + [
-        html.Tr([html.Td(df_table.iloc[i][col]) for col in df_table.columns]) for i in range(len(df_table))
-    ], style={'margin': '20px auto', 'borderCollapse': 'collapse', 'width': '80%'})
+    # Dernier taux
+    dernier = df.sort_values('Date').iloc[-1]
+    taux_text = f"1 euro vaut {dernier['Price']:.4f} dollars"
 
-    return fig, table
+    return fig, taux_text
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8050, debug=True)
