@@ -18,18 +18,14 @@ app = dash.Dash(__name__)
 app.layout = html.Div([
     html.H1("Tableau de bord des prix EUR/USD", style={'textAlign': 'center'}),
 
+    # Rafraîchissement automatique toutes les 5 min
     dcc.Interval(
         id='interval-component',
-        interval=5 * 60 * 1000,  # 5 minutes
+        interval=5 * 60 * 1000,
         n_intervals=0
     ),
 
     dcc.Graph(id='prix-eur-usd-graph'),
-
-    html.Div([
-        html.H4("📋 Données CSV (plus récentes en haut)", style={'textAlign': 'center'}),
-        html.Div(id='csv-table')
-    ]),
 
     html.Div([
         html.H4("📈 Rapport quotidien (20h)", style={'textAlign': 'center'}),
@@ -41,8 +37,14 @@ app.layout = html.Div([
             'width': '80%',
             'margin': 'auto'
         })
+    ]),
+
+    html.Div([
+        html.H4("📋 Données CSV (plus récentes en haut)", style={'textAlign': 'center'}),
+        html.Div(id='csv-table')
     ])
 ])
+
 
 @app.callback(
     [Output('prix-eur-usd-graph', 'figure'),
